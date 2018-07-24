@@ -1,0 +1,14 @@
+version: "2"
+services:
+  gitbook:
+    build: ./
+    container_name: gitbook
+    ports:
+       - "80:80"
+    privileged: true
+    tty: true
+    command: bash -c "/usr/sbin/apachectl -D FOREGROUND"
+    volumes:
+      - ./data/book:/home/gitbook/book
+      - ./data/source:/var/www/html
+
