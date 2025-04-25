@@ -1,4 +1,6 @@
 FROM centos:7
+RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo && \
+    yum clean all && yum makecache
 RUN yum -y install epel-release && yum makecache && yum -y install httpd python-simplejson npm && \
     mkdir -p /home/gitbook
 RUN npm install -g gitbook-cli
