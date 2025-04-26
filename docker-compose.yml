@@ -9,6 +9,5 @@ services:
     tty: true
     command: bash -c "/usr/sbin/apachectl -D FOREGROUND"
     volumes:
-      - ./data/book:/home/gitbook/book
-      - ./data/source:/var/www/html
-
+      - ./book:/home/gitbook/book
+      - ./source:/var/www/html
