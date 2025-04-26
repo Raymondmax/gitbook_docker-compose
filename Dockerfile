@@ -1,12 +1,25 @@
-FROM centos:7
-RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo && \
-    yum clean all && yum makecache
-RUN yum -y install epel-release && yum makecache && yum -y install httpd python-simplejson npm && \
-    mkdir -p /home/gitbook
-RUN npm install -g gitbook-cli
-RUN mv /etc/localtime /etc/localtime.bak &&\
-    ln -s /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
-COPY conf/server.py       /usr/local/server.py
+FROM node:10-buster
+
+# 安装 Apache 和依赖
+RUN apt-get update && \
+    apt-get install -y apache2 python-simplejson curl && \
+    npm config set registry https://registry.npmmirror.com && \
+    npm install -g gitbook-cli
+
+# 设置时区
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# 设置工作目录
 WORKDIR /home/gitbook
-RUN gitbook init 
-RUN gitbook build /home/gitbook /var/www/html
+
+# 拷贝 GitBook 源文件（请确保宿主机中有 book/ 目录）
+COPY ./book/ /home/gitbook/
+
+# 安装插件并构建 GitBook（使用 || true 可忽略插件缺失报错）
+RUN gitbook install || true && gitbook build /home/gitbook /var/www/html || true
+
+# 暴露端口
+EXPOSE 80
+
+# 启动 Apache
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
