@@ -19,7 +19,7 @@ COPY ./book/ /home/gitbook/
 RUN gitbook install || true && gitbook build /home/gitbook /var/www/html || true
 
 # 暴露端口
-EXPOSE 80
+#EXPOSE 80
 
 # 启动 Apache
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+#CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
