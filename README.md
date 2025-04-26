@@ -15,3 +15,7 @@ Start using the gitbook
 * [简介](README.md)
 * [第一章：开始](chapter1.md)
 ```
+```bash
+docker compose build
+docker compose up -d
+```
