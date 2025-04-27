@@ -1,6 +1,7 @@
 ## Run gitbook
 ```bash
 docker compose up -d
+ln -s /var/lib/docker/volumes/gitbook_docker-compose_source/_data ./source
 ```
 ## Add Chapter
 ```md
