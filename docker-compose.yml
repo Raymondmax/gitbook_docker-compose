@@ -10,6 +10,4 @@ services:
     command: bash -c "/usr/sbin/apachectl -D FOREGROUND"
     volumes:
       - ./book:/home/gitbook/book
-      - source:/var/www/html
-volumes:
-  source:
+      #- source:/var/www/html
